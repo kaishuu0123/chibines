@@ -337,11 +337,10 @@ func (apu *APU) output() float32 {
 	p2 := apu.square2.currentOutput
 	t := apu.triangle.currentOutput
 	n := apu.noise.currentOutput
-	// d := apu.dmc.output()
+	d := apu.dmc.currentOutput
 	pulseOut := squareTable[p1+p2]
-	// tndOut := tndTable[3*t+2*n+d]
-	tndOut := tndTable[3*t+2*n+0]
-	return (pulseOut + tndOut)
+	tndOut := tndTable[3*t+2*n+d]
+	return (pulseOut + tndOut) * GLOBAL_VOLUME
 }
 
 func (apu *APU) readRegister(address uint16) byte {
