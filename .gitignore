@@ -92,3 +92,5 @@ $RECYCLE.BIN/
 
 roms
 *.txt
+
+dist/
