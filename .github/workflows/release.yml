@@ -32,10 +32,12 @@ jobs:
           sudo apt-get -qq install -y libx11-dev xorg-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
           sudo apt-get -qq install -y libglfw3 libglfw3-dev
           sudo apt-get -qq install -y portaudio19-dev
+          mkdir _release
       - name: Get MacOS dev libraries and tools
         if: matrix.os == 'macos-latest'
         run: |
           brew install pkg-config portaudio glfw
+          mkdir _release
       - name: Get Windows dev libraries and tools
         if: matrix.os == 'windows-latest'
         uses: msys2/setup-msys2@v2
@@ -52,16 +54,17 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: msys2 {0}
         run: |
-          go build cmd/toynes/main.go
+          mkdir _release
+          go build cmd/toynes/main.go -o _release/toynes
       - name: Build Linux app
         if: matrix.os == 'ubuntu-latest'
         run: |
           EXT_WFLAGS="-ldflags '-extldflags \"-Wl,-rpath=\$\$ORIGIN\"'" \
-          go build cmd/toynes/main.go
+          go build cmd/toynes/main.go -o _release/toynes.exe
       - name: Build macOS app
         if: matrix.os == 'macos-latest'
         run: |
-          go build cmd/toynes/main.go
+          go build cmd/toynes/main.go -o _release/toynes
       - name: Save built app for upload
         uses: actions/upload-artifact@v1
         with:
