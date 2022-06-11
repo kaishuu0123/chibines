@@ -6,11 +6,11 @@ Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was
 
 - [Spec](#spec)
 - [Key binding](#key-binding)
-- [My ToDO list](#my-todo-list)
-- [Build](#build)
+- [Build & Run](#build--run)
 - [Dependencies](#dependencies)
 - [FAQ](#faq)
   - [Why do you only support these mappers?](#why-do-you-only-support-these-mappers)
+- [My ToDO list](#my-todo-list)
 - [Reference](#reference)
   - [Emulator](#emulator)
   - [Documents](#documents)
@@ -54,28 +54,7 @@ Player 2
 | A | A |
 | B | S |
 
-## My ToDO list
-
-- [X] CPU
-- [X] PPU
-- [X] APU
-- [ ] NSF Player (cmd/toynes-nsf)
-  - like VirtuaNES
-- [ ] 6502 compiler
-  - like cc65
-- [ ] disassembler
-- [ ] Interpreter (cmd/toynes-interpreter)
-- [ ] sprite extractor (cmd/toynes-sprites)
-- [ ] ROM info CLI (cmd/toynes-rominfo)
-- [ ] Debugger (like [Mesen's Debugging tools](https://www.mesen.ca/docs/debugging.html))
-- [ ] test
-  - [ ] [nes-test-roms](https://github.com/christopherpow/nes-test-roms/)
-    - like [tetanes README.md](https://github.com/lukexor/tetanes)
-  - [ ] go testing (like integration test)
-    - [ ] CPU
-    - [ ] PPU
-
-## Build
+## Build & Run
 
 - Install Library
   - portaudio
@@ -90,6 +69,12 @@ brew install portaudio
 
 ```shell
 go build cmd/toynes/main.go
+```
+
+- or go run
+
+```shell
+go run cmd/toynes/main.go
 ```
 
 ## Dependencies
@@ -111,6 +96,27 @@ Because it's my favorite games & for [nes-test-roms](https://github.com/christop
 - Mapper16
   - [SD Gundam Gaiden: Knight Gundam Monogatari 2: Hikari no Kishi](https://nescartdb.com/profile/view/1752/)
   - [SD Gundam Gaiden: Knight Gundam Monogatari 3: Densetsu no Kishi Dan](https://nescartdb.com/profile/view/1753/)
+
+## My ToDO list
+
+- [X] CPU
+- [X] PPU
+- [X] APU
+- [ ] NSF Player (cmd/toynes-nsf)
+  - like VirtuaNES
+- [ ] 6502 compiler
+  - like cc65
+- [ ] disassembler
+- [ ] Interpreter (cmd/toynes-interpreter)
+- [ ] sprite extractor (cmd/toynes-sprites)
+- [ ] ROM info CLI (cmd/toynes-rominfo)
+- [ ] Debugger (like [Mesen's Debugging tools](https://www.mesen.ca/docs/debugging.html))
+- [ ] test
+  - [ ] [nes-test-roms](https://github.com/christopherpow/nes-test-roms/)
+    - like [tetanes README.md](https://github.com/lukexor/tetanes)
+  - [ ] go testing (like integration test)
+    - [ ] CPU
+    - [ ] PPU
 
 ## Reference
 
