@@ -66,7 +66,7 @@ jobs:
           cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/
           install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/toynes
           mkdir _release
-          cp -ar build/macosx/ToyNES.app _release/ToyNES.app
+          cp -a build/macosx/ToyNES.app _release/ToyNES.app
 
       # - name: Build Windows app
       #   if: matrix.os == 'windows-latest'
