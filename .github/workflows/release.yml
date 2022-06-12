@@ -13,7 +13,8 @@ jobs:
     name: Build
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [macos-latest]
+        # os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     env:
       release-dir: _release
@@ -24,32 +25,32 @@ jobs:
         with:
           go-version: ^1.18
 
-      - name: Get Linux dev libraries and tools
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get -qq install -y make pkg-config
-          sudo apt-get -qq install -y libx11-dev xorg-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
-          sudo apt-get -qq install -y libglfw3 libglfw3-dev
-          sudo apt-get -qq install -y portaudio19-dev
+      # - name: Get Linux dev libraries and tools
+      #   if: matrix.os == 'ubuntu-latest'
+      #   run: |
+      #     sudo apt-get -qq update
+      #     sudo apt-get -qq install -y make pkg-config
+      #     sudo apt-get -qq install -y libx11-dev xorg-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
+      #     sudo apt-get -qq install -y libglfw3 libglfw3-dev
+      #     sudo apt-get -qq install -y portaudio19-dev
 
       - name: Get MacOS dev libraries and tools
         if: matrix.os == 'macos-latest'
         run: |
           brew install pkg-config portaudio glfw
 
-      - name: Get Windows dev libraries and tools
-        if: matrix.os == 'windows-latest'
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          path-type: inherit
-          release: false
-          install: >
-            mingw-w64-x86_64-gcc
-            mingw-w64-x86_64-pkgconf
-            mingw-w64-x86_64-portaudio
-            mingw-w64-x86_64-glfw
+      # - name: Get Windows dev libraries and tools
+      #   if: matrix.os == 'windows-latest'
+      #   uses: msys2/setup-msys2@v2
+      #   with:
+      #     msystem: MINGW64
+      #     path-type: inherit
+      #     release: false
+      #     install: >
+      #       mingw-w64-x86_64-gcc
+      #       mingw-w64-x86_64-pkgconf
+      #       mingw-w64-x86_64-portaudio
+      #       mingw-w64-x86_64-glfw
 
       # - name: Build Linux app
       #   if: matrix.os == 'ubuntu-latest'
@@ -140,20 +141,21 @@ jobs:
     strategy:
       matrix:
         # should be same as runner.os
-        target-os: [Linux, macOS, Windows]
+        # target-os: [Linux, macOS, Windows]
+        target-os: [macOS]
         include:
-          - target-os: Linux
-            compress: tar -zcf
-            archive-ext: tar.gz
-            archive-mime: tar
+          # - target-os: Linux
+          #   compress: tar -zcf
+          #   archive-ext: tar.gz
+          #   archive-mime: tar
           - target-os: macOS
             compress: tar -zcf
             archive-ext: tar.gz
             archive-mime: tar
-          - target-os: Windows
-            compress: zip -qq -r
-            archive-ext: zip
-            archive-mime: zip
+          # - target-os: Windows
+          #   compress: zip -qq -r
+          #   archive-ext: zip
+          #   archive-mime: zip
     runs-on: ubuntu-latest
     steps:
       - name: Get version tag
