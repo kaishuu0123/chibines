@@ -184,6 +184,7 @@ jobs:
         # compress all the files without a parent dir
         # (cd into arch dir -> make archive in its parent -> go back)
         run: |
+          rm upload_url
           archive='${{ env.app-name }}-${{ steps.get_version.outputs.version }}-${{ matrix.target-os }}-${{ env.app-arch }}'
           compress='${{ matrix.compress }} ./${archive,,}.${{ matrix.archive-ext }} *'
           eval $compress
