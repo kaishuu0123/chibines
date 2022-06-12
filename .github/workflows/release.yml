@@ -184,12 +184,9 @@ jobs:
         # compress all the files without a parent dir
         # (cd into arch dir -> make archive in its parent -> go back)
         run: |
-          ls
-          cd ./${{ matrix.target-os }}
           archive='${{ env.app-name }}-${{ steps.get_version.outputs.version }}-${{ matrix.target-os }}-${{ env.app-arch }}'
           compress='${{ matrix.compress }} ../${archive,,}.${{ matrix.archive-ext }} *'
           eval $compress
-          cd ../
           echo ::set-output name=archive_name::${archive,,}.${{ matrix.archive-ext }}
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
