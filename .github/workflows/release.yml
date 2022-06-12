@@ -144,11 +144,11 @@ jobs:
         target-os: [macOS]
         include:
           - target-os: Linux
-            compress: tar -zcfp
+            compress: tar -zcf
             archive-ext: tar.gz
             archive-mime: tar
           - target-os: macOS
-            compress: tar -zcfp
+            compress: tar -zcf
             archive-ext: tar.gz
             archive-mime: tar
           - target-os: Windows
