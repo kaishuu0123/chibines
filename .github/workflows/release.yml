@@ -13,8 +13,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        os: [macos-latest]
-        # os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     env:
       release-dir: _release
@@ -25,66 +24,66 @@ jobs:
         with:
           go-version: ^1.18
 
-      # - name: Get Linux dev libraries and tools
-      #   if: matrix.os == 'ubuntu-latest'
-      #   run: |
-      #     sudo apt-get -qq update
-      #     sudo apt-get -qq install -y make pkg-config
-      #     sudo apt-get -qq install -y libx11-dev xorg-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
-      #     sudo apt-get -qq install -y libglfw3 libglfw3-dev
-      #     sudo apt-get -qq install -y portaudio19-dev
+      - name: Get Linux dev libraries and tools
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get -qq update
+          sudo apt-get -qq install -y make pkg-config
+          sudo apt-get -qq install -y libx11-dev xorg-dev libglu1-mesa libglu1-mesa-dev libgl1-mesa-glx libgl1-mesa-dev
+          sudo apt-get -qq install -y libglfw3 libglfw3-dev
+          sudo apt-get -qq install -y portaudio19-dev
 
       - name: Get MacOS dev libraries and tools
         if: matrix.os == 'macos-latest'
         run: |
           brew install pkg-config portaudio glfw
 
-      # - name: Get Windows dev libraries and tools
-      #   if: matrix.os == 'windows-latest'
-      #   uses: msys2/setup-msys2@v2
-      #   with:
-      #     msystem: MINGW64
-      #     path-type: inherit
-      #     release: false
-      #     install: >
-      #       mingw-w64-x86_64-gcc
-      #       mingw-w64-x86_64-pkgconf
-      #       mingw-w64-x86_64-portaudio
-      #       mingw-w64-x86_64-glfw
+      - name: Get Windows dev libraries and tools
+        if: matrix.os == 'windows-latest'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          path-type: inherit
+          release: false
+          install: >
+            mingw-w64-x86_64-gcc
+            mingw-w64-x86_64-pkgconf
+            mingw-w64-x86_64-portaudio
+            mingw-w64-x86_64-glfw
 
-      # - name: Build Linux app
-      #   if: matrix.os == 'ubuntu-latest'
-      #   run: |
-      #     CGO_ENABLED=1 go build -o _release/toynes cmd/toynes/main.go
+      - name: Build Linux app
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          CGO_ENABLED=1 go build -o _release/toynes cmd/toynes/main.go
 
       - name: Build macOS app
         if: matrix.os == 'macos-latest'
         run: |
           mkdir -p build/macosx/ToyNES.app/Contents/MacOS/
           CGO_ENABLED=1 go build -o build/macosx/ToyNES.app/Contents/MacOS/toynes cmd/toynes/main.go
-          chmod +x build/macosx/ToyNES.app/Contents/MacOS/toynes
           cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/
           install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/toynes
           mkdir _release
-          cp -a build/macosx/ToyNES.app _release/ToyNES.app
+          cp -r build/macosx/ToyNES.app _release/ToyNES.app
+          chmod +x _release/ToyNES.app/Contents/MacOS/toynes
 
-      # - name: Build Windows app
-      #   if: matrix.os == 'windows-latest'
-      #   shell: msys2 {0}
-      #   run: |
-      #     CGO_ENABLED=1 go build -o _release/toynes.exe cmd/toynes/main.go
-      #     cp /mingw64/bin/glfw3.dll _release/
-      #     cp /mingw64/bin/libatomic-1.dll _release/
-      #     cp /mingw64/bin/libgcc_s_seh-1.dll _release/
-      #     cp /mingw64/bin/libgmp-10.dll _release/
-      #     cp /mingw64/bin/libgmpxx-4.dll _release/
-      #     cp /mingw64/bin/libgomp-1.dll _release/
-      #     cp /mingw64/bin/libportaudio.dll _release/
-      #     cp /mingw64/bin/libportaudiocpp.dll _release/
-      #     cp /mingw64/bin/libquadmath-0.dll _release/
-      #     cp /mingw64/bin/libssp-0.dll _release/
-      #     cp /mingw64/bin/libstdc++-6.dll _release/
-      #     cp /mingw64/bin/libwinpthread-1.dll _release/
+      - name: Build Windows app
+        if: matrix.os == 'windows-latest'
+        shell: msys2 {0}
+        run: |
+          CGO_ENABLED=1 go build -o _release/toynes.exe cmd/toynes/main.go
+          cp /mingw64/bin/glfw3.dll _release/
+          cp /mingw64/bin/libatomic-1.dll _release/
+          cp /mingw64/bin/libgcc_s_seh-1.dll _release/
+          cp /mingw64/bin/libgmp-10.dll _release/
+          cp /mingw64/bin/libgmpxx-4.dll _release/
+          cp /mingw64/bin/libgomp-1.dll _release/
+          cp /mingw64/bin/libportaudio.dll _release/
+          cp /mingw64/bin/libportaudiocpp.dll _release/
+          cp /mingw64/bin/libquadmath-0.dll _release/
+          cp /mingw64/bin/libssp-0.dll _release/
+          cp /mingw64/bin/libstdc++-6.dll _release/
+          cp /mingw64/bin/libwinpthread-1.dll _release/
 
       - name: Save built app for upload
         uses: actions/upload-artifact@v1
@@ -141,21 +140,20 @@ jobs:
     strategy:
       matrix:
         # should be same as runner.os
-        # target-os: [Linux, macOS, Windows]
-        target-os: [macOS]
+        target-os: [Linux, macOS, Windows]
         include:
-          # - target-os: Linux
-          #   compress: tar -zcf
-          #   archive-ext: tar.gz
-          #   archive-mime: tar
-          - target-os: macOS
-            compress: tar -zcf
+          - target-os: Linux
+            compress: tar -zcfp
             archive-ext: tar.gz
             archive-mime: tar
-          # - target-os: Windows
-          #   compress: zip -qq -r
-          #   archive-ext: zip
-          #   archive-mime: zip
+          - target-os: macOS
+            compress: tar -zcfp
+            archive-ext: tar.gz
+            archive-mime: tar
+          - target-os: Windows
+            compress: zip -qq -r
+            archive-ext: zip
+            archive-mime: zip
     runs-on: ubuntu-latest
     steps:
       - name: Get version tag
@@ -175,6 +173,11 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: ${{ matrix.target-os }}
+      - name: Add permission for MacOS
+        if: matrix.os == 'macos-latest'
+        run: |
+          cd ./${{ matrix.target-os }}
+          chmod +x ToyNES.app/Contents/MacOS/toynes
       - name: Compress the build
         id: compress
         # compress all the files without a parent dir
