@@ -185,7 +185,7 @@ jobs:
         # (cd into arch dir -> make archive in its parent -> go back)
         run: |
           archive='${{ env.app-name }}-${{ steps.get_version.outputs.version }}-${{ matrix.target-os }}-${{ env.app-arch }}'
-          compress='${{ matrix.compress }} ../${archive,,}.${{ matrix.archive-ext }} *'
+          compress='${{ matrix.compress }} ./${archive,,}.${{ matrix.archive-ext }} *'
           eval $compress
           echo ::set-output name=archive_name::${archive,,}.${{ matrix.archive-ext }}
       - name: Upload release asset
