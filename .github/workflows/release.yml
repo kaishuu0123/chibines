@@ -169,7 +169,8 @@ jobs:
       - name: Read release upload url
         id: upload_url
         run: |
-          value=`cat upload_url/upload_url`
+          ls
+          value=`cat upload_url`
           echo "::set-output name=url::$value"
       - name: Get the build
         uses: actions/download-artifact@v3
