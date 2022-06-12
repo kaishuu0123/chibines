@@ -51,38 +51,39 @@ jobs:
             mingw-w64-x86_64-portaudio
             mingw-w64-x86_64-glfw
 
-      - name: Build Linux app
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          CGO_ENABLED=1 go build -o _release/toynes cmd/toynes/main.go
+      # - name: Build Linux app
+      #   if: matrix.os == 'ubuntu-latest'
+      #   run: |
+      #     CGO_ENABLED=1 go build -o _release/toynes cmd/toynes/main.go
 
       - name: Build macOS app
         if: matrix.os == 'macos-latest'
         run: |
           mkdir -p build/macosx/ToyNES.app/Contents/MacOS/
           CGO_ENABLED=1 go build -o build/macosx/ToyNES.app/Contents/MacOS/toynes cmd/toynes/main.go
-          cp /usr/local/Cellar/portaudio/19.7.0/lib/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/
-          install_name_tool -change /usr/local/Cellar/portaudio/19.7.0/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/toynes
+          chmod +x build/macosx/ToyNES.app/Contents/MacOS/toynes
+          cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/
+          install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/toynes
           mkdir _release
           cp -r build/macosx/ToyNES.app _release/ToyNES.app
 
-      - name: Build Windows app
-        if: matrix.os == 'windows-latest'
-        shell: msys2 {0}
-        run: |
-          CGO_ENABLED=1 go build -o _release/toynes.exe cmd/toynes/main.go
-          cp /mingw64/bin/glfw3.dll _release/
-          cp /mingw64/bin/libatomic-1.dll _release/
-          cp /mingw64/bin/libgcc_s_seh-1.dll _release/
-          cp /mingw64/bin/libgmp-10.dll _release/
-          cp /mingw64/bin/libgmpxx-4.dll _release/
-          cp /mingw64/bin/libgomp-1.dll _release/
-          cp /mingw64/bin/libportaudio.dll _release/
-          cp /mingw64/bin/libportaudiocpp.dll _release/
-          cp /mingw64/bin/libquadmath-0.dll _release/
-          cp /mingw64/bin/libssp-0.dll _release/
-          cp /mingw64/bin/libstdc++-6.dll _release/
-          cp /mingw64/bin/libwinpthread-1.dll _release/
+      # - name: Build Windows app
+      #   if: matrix.os == 'windows-latest'
+      #   shell: msys2 {0}
+      #   run: |
+      #     CGO_ENABLED=1 go build -o _release/toynes.exe cmd/toynes/main.go
+      #     cp /mingw64/bin/glfw3.dll _release/
+      #     cp /mingw64/bin/libatomic-1.dll _release/
+      #     cp /mingw64/bin/libgcc_s_seh-1.dll _release/
+      #     cp /mingw64/bin/libgmp-10.dll _release/
+      #     cp /mingw64/bin/libgmpxx-4.dll _release/
+      #     cp /mingw64/bin/libgomp-1.dll _release/
+      #     cp /mingw64/bin/libportaudio.dll _release/
+      #     cp /mingw64/bin/libportaudiocpp.dll _release/
+      #     cp /mingw64/bin/libquadmath-0.dll _release/
+      #     cp /mingw64/bin/libssp-0.dll _release/
+      #     cp /mingw64/bin/libstdc++-6.dll _release/
+      #     cp /mingw64/bin/libwinpthread-1.dll _release/
 
       - name: Save built app for upload
         uses: actions/upload-artifact@v1
