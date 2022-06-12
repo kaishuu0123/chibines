@@ -2,6 +2,8 @@ package audio
 
 import "github.com/gordonklaus/portaudio"
 
+const GLOBAL_VOLUME = 0.5
+
 type Audio struct {
 	stream         *portaudio.Stream
 	SampleRate     float64
@@ -44,7 +46,7 @@ func (a *Audio) Callback(out []float32) {
 		if i%a.outputChannels == 0 {
 			select {
 			case sample := <-a.Channel:
-				output = sample
+				output = sample * GLOBAL_VOLUME
 			default:
 				output = 0
 			}

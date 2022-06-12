@@ -2,7 +2,6 @@
 package toynes
 
 const frameCounterRate = CPUFrequency / 240.0
-const GLOBAL_VOLUME = 0.2
 
 var squareTable [31]float32
 var tndTable [203]float32
@@ -340,7 +339,7 @@ func (apu *APU) output() float32 {
 	d := apu.dmc.currentOutput
 	pulseOut := squareTable[p1+p2]
 	tndOut := tndTable[3*t+2*n+d]
-	return (pulseOut + tndOut) * GLOBAL_VOLUME
+	return (pulseOut + tndOut)
 }
 
 func (apu *APU) readRegister(address uint16) byte {
