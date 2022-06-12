@@ -13,8 +13,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        # os: [ubuntu-latest, macos-latest, windows-latest]
-        os: [macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
     runs-on: ${{ matrix.os }}
     env:
       release-dir: _release
@@ -144,18 +143,18 @@ jobs:
         # target-os: [Linux, macOS, Windows]
         target-os: [macOS]
         include:
-          # - target-os: Linux
-          #   compress: tar -zcfp
-          #   archive-ext: tar.gz
-          #   archive-mime: tar
+          - target-os: Linux
+            compress: tar -zcfp
+            archive-ext: tar.gz
+            archive-mime: tar
           - target-os: macOS
             compress: tar -zcfp
             archive-ext: tar.gz
             archive-mime: tar
-          # - target-os: Windows
-          #   compress: zip -qq -r
-          #   archive-ext: zip
-          #   archive-mime: zip
+          - target-os: Windows
+            compress: zip -qq -r
+            archive-ext: zip
+            archive-mime: zip
     runs-on: ubuntu-latest
     steps:
       - name: Get version tag
@@ -185,6 +184,7 @@ jobs:
         # compress all the files without a parent dir
         # (cd into arch dir -> make archive in its parent -> go back)
         run: |
+          ls
           cd ./${{ matrix.target-os }}
           archive='${{ env.app-name }}-${{ steps.get_version.outputs.version }}-${{ matrix.target-os }}-${{ env.app-arch }}'
           compress='${{ matrix.compress }} ../${archive,,}.${{ matrix.archive-ext }} *'
