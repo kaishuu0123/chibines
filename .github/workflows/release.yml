@@ -52,16 +52,27 @@ jobs:
         if: matrix.os == 'windows-latest'
         shell: msys2 {0}
         run: |
-          go build -o _release/toynes cmd/toynes/main.go
+          go build -o _release/toynes.exe cmd/toynes/main.go
+          cp /mingw64/bin/glfw3.dll _release/
+          cp /mingw64/bin/libatomic-1.dll _release/
+          cp /mingw64/bin/libgcc_s_seh-1.dll _release/
+          cp /mingw64/bin/libgmp-10.dll _release/
+          cp /mingw64/bin/libgmpxx-4.dll _release/
+          cp /mingw64/bin/libgomp-1.dll _release/
+          cp /mingw64/bin/libportaudio.dll _release/
+          cp /mingw64/bin/libportaudiocpp.dll _release/
+          cp /mingw64/bin/libquadmath-0.dll _release/
+          cp /mingw64/bin/libssp-0.dll _release/
+          cp /mingw64/bin/libstdc++-6.dll _release/
+          cp /mingw64/bin/libwinpthread-1.dll _release/
       - name: Build Linux app
         if: matrix.os == 'ubuntu-latest'
         run: |
-          EXT_WFLAGS="-ldflags '-extldflags \"-Wl,-rpath=\$\$ORIGIN\"'" \
-          go build -o _release/toynes.exe cmd/toynes/main.go
+          go build -o _release/toynes --ldflags '-extldflags "-static"' cmd/toynes/main.go
       - name: Build macOS app
         if: matrix.os == 'macos-latest'
         run: |
-          go build -o _release/toynes cmd/toynes/main.go
+          go build -o _release/toynes --ldflags '-extldflags "-static"' cmd/toynes/main.go
       - name: Save built app for upload
         uses: actions/upload-artifact@v1
         with:
