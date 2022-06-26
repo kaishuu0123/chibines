@@ -31,6 +31,8 @@ Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was
   - [x] Mapper 3
   - [x] Mapper 4
   - [x] Mapper 16
+  - [x] Mapper 31
+    - For NSF Player
 
 ## Key binding
 
