@@ -41,6 +41,8 @@ func NewMapper(console *Console) (Mapper, error) {
 		return NewMapper005(cartridge, console), nil
 	case 16:
 		return NewMapper016(cartridge, console), nil
+	case 31:
+		return NewMapper031(cartridge), nil
 	}
 	err := fmt.Errorf("Unsupported mapper: %d", cartridge.MapperID)
 	return nil, err

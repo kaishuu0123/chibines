@@ -342,6 +342,55 @@ func (apu *APU) output() float32 {
 	return (pulseOut + tndOut)
 }
 
+type NoiseInfo struct {
+	Out    byte
+	Period uint16
+}
+
+type DMCInfo struct {
+	Out    byte
+	Period uint16
+}
+
+type APUCurrentInfo struct {
+	Square1  float32
+	Square2  float32
+	Triangle float32
+	Noise    *NoiseInfo
+	DMC      *DMCInfo
+}
+
+func (apu *APU) CurrentInfo() *APUCurrentInfo {
+	var s1 float32 = 0
+	if apu.square1.realPeriod != 0 {
+		s1 = float32(CPUFrequency) / (16.0 * (float32(apu.square1.realPeriod) + 1))
+	}
+	var s2 float32 = 0
+	if apu.square2.realPeriod != 0 {
+		s2 = float32(CPUFrequency) / (16.0 * (float32(apu.square2.realPeriod) + 1))
+	}
+	var t float32 = 0
+	if apu.triangle.apuLengthCounter.baseAPUChannel.period != 0 {
+		t = float32(CPUFrequency) / (16.0 * (float32(apu.triangle.apuLengthCounter.baseAPUChannel.period) + 1))
+	}
+
+	n := &NoiseInfo{}
+	n.Out = apu.noise.currentOutput
+	n.Period = apu.noise.apuEnvelope.apuLengthCounter.baseAPUChannel.period
+
+	d := &DMCInfo{}
+	d.Out = apu.dmc.currentOutput
+	d.Period = apu.dmc.baseAPUChannel.period
+
+	return &APUCurrentInfo{
+		Square1:  s1,
+		Square2:  s2,
+		Triangle: t,
+		Noise:    n,
+		DMC:      d,
+	}
+}
+
 func (apu *APU) readRegister(address uint16) byte {
 	var status byte
 	switch address {
@@ -1050,6 +1099,7 @@ func NewDeltaModulationChannel(console *Console) *DeltaModulationChannel {
 		needToRun:      false,
 		needInit:       0,
 		lastValue4011:  0,
+		currentOutput:  0,
 	}
 
 	for i := 0; i < len(d.periodLookupTable); i++ {

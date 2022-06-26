@@ -33,7 +33,6 @@ func NewMasterWindow(title string, width, height int, flags imgui.WindowFlags) *
 	}
 
 	var fontsData = framework_for_imgui.SetupFont(io)
-	// io.Fonts().AddFontDefault()
 	fontAtlas := io.Fonts().TextureDataRGBA32()
 	r.SetFontTexture(fontAtlas)
 

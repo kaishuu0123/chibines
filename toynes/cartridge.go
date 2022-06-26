@@ -22,6 +22,9 @@ type Cartridge struct {
 	CHRSize     uint32
 	PRGMask     uint32
 	CHRMask     uint32
+
+	// for NSF Player
+	nsfFileInfo *NSFFileInfo
 }
 
 func createMask(size uint32) uint32 {

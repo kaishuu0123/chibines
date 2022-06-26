@@ -1,3 +1,5 @@
+github.com/Code-Hex/dd v1.1.0 h1:VEtTThnS9l7WhpKUIpdcWaf0B8Vp0LeeSEsxA1DZseI=
+github.com/Code-Hex/dd v1.1.0/go.mod h1:VaMyo/YjTJ3d4qm/bgtrUkT2w+aYwJ07Y7eCWyrJr1w=
 github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/edsrzf/mmap-go v1.1.0 h1:6EUwBLQ/Mcr1EYLE4Tn1VdW1A4ckqCQWZBw8Hr0kjpQ=
@@ -6,6 +8,8 @@ github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6 h1:zDw5v7qm4yH7N8C8uWd+8I
 github.com/go-gl/gl v0.0.0-20211210172815-726fda9656d6/go.mod h1:9YTyiznxEY1fVinfM7RvRcjRHbw2xLBJ3AAGIT0I4Nw=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220516021902-eb3e265c7661 h1:1bpooddSK2996NWM/1TW59cchQOm9MkoV9DkhSJH1BI=
 github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220516021902-eb3e265c7661/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220622232848-a6c407ee30a0 h1:ZWsNtyC3mgUL48DikCfjkyiaRYZ3OL2XBfn7JJs2/ZE=
+github.com/go-gl/glfw/v3.3/glfw v0.0.0-20220622232848-a6c407ee30a0/go.mod h1:tQ2UAYgL5IevRw8kRxooKSPJfGvJ9fJQFa0TUsXzTg8=
 github.com/gordonklaus/portaudio v0.0.0-20220320131553-cc649ad523c1 h1:FgUJ91JoMbS5qWXdIpnHta1hLtw1X8n2ek5JRED3R1I=
 github.com/gordonklaus/portaudio v0.0.0-20220320131553-cc649ad523c1/go.mod h1:HfYnZi/ARQKG0dwH5HNDmPCHdLiFiBf+SI7DbhW7et4=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
