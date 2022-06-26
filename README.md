@@ -104,7 +104,7 @@ Because it's my favorite games & for [nes-test-roms](https://github.com/christop
 - [X] CPU
 - [X] PPU
 - [X] APU
-- [ ] NSF Player (cmd/toynes-nsf)
+- [X] NSF Player (cmd/toynes-nsf)
   - like VirtuaNES
 - [ ] 6502 compiler
   - like cc65
