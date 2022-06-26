@@ -7,17 +7,22 @@ import (
 )
 
 var (
-	//go:embed fonts/PixelMplus12-Regular.ttf
-	pixelMPlus12 []byte
+	//go:embed fonts/PixelMplus10-Regular.ttf
+	pixelMPlus10 []byte
 )
 
 func SetupFont(io imgui.IO) []imgui.Font {
 	fonts := io.Fonts()
 
-	// fonts.AddFontDefault()
 	var fontsData []imgui.Font
-	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus12, 32.0, imgui.DefaultFontConfig, fonts.GlyphRangesJapanese()))
-	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus12, 10.0, imgui.DefaultFontConfig, fonts.GlyphRangesJapanese()))
+	config := imgui.NewFontConfig()
+	defer config.Delete()
+
+	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus10, 32.0, config, fonts.GlyphRangesJapanese()))
+	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus10, 28.0, config, fonts.GlyphRangesJapanese()))
+	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus10, 22.0, config, fonts.GlyphRangesJapanese()))
+	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus10, 18.0, config, fonts.GlyphRangesJapanese()))
+	fontsData = append(fontsData, fonts.AddFontFromMemoryTTFV(pixelMPlus10, 14.0, config, fonts.GlyphRangesJapanese()))
 
 	return fontsData
 }

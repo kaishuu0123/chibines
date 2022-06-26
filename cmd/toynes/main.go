@@ -68,7 +68,7 @@ func ResetConsole(file_name string) {
 	log.Println("Reset Console")
 	log.Printf("ROM file path: %s\n", file_name)
 	var err error
-	console, err = toynes.NewConsole(file_name)
+	console, err = toynes.NewConsole(file_name, false)
 	if err != nil {
 		log.Fatalln(err)
 	}

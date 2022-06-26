@@ -16,7 +16,7 @@ type Console struct {
 	disableOCnextFrame bool
 }
 
-func NewConsole(path string) (*Console, error) {
+func NewConsole(path string, isNSF bool) (*Console, error) {
 	controller1 := NewController()
 	controller2 := NewController()
 	console := Console{
@@ -31,9 +31,18 @@ func NewConsole(path string) (*Console, error) {
 	console.APU = NewAPU(&console)
 	console.PPU = NewPPU(&console)
 
-	cartridge, err := LoadNESFile(path, &console)
-	if err != nil {
-		return nil, err
+	var cartridge *Cartridge
+	var err error
+	if isNSF {
+		cartridge, err = LoadNSFFile(path, &console)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		cartridge, err = LoadNESFile(path, &console)
+		if err != nil {
+			return nil, err
+		}
 	}
 	console.Cartridge = cartridge
 
@@ -47,8 +56,7 @@ func NewConsole(path string) (*Console, error) {
 	)
 	console.CPU.bus = bus
 
-	console.PPU.Reset()
-	console.CPU.Reset()
+	console.Reset()
 
 	return &console, nil
 }

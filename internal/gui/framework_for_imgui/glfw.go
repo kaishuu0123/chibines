@@ -41,10 +41,12 @@ type GLFW struct {
 	onDropCallback   func([]string)
 }
 
+func init() {
+	runtime.LockOSThread()
+}
+
 // NewGLFW attempts to initialize a GLFW context.
 func NewGLFW(io imgui.IO, clientAPI GLFWClientAPI, width, height int, title string) (*GLFW, error) {
-	runtime.LockOSThread()
-
 	err := glfw.Init()
 	if err != nil {
 		return nil, fmt.Errorf("failed to initialize glfw: %w", err)
