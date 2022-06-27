@@ -4,16 +4,31 @@ ToyNES is NES emulator written by Go. This is my favorite hobby project!
 
 Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was given to mimicking Mesen's behavior rather than refactoring.
 
+- [Screenshots](#screenshots)
+  - [`cmd/toynes` (NES Console)](#cmdtoynes-nes-console)
+  - [`cmd/toynes-nsf` (NSF Player)](#cmdtoynes-nsf-nsf-player)
 - [Spec](#spec)
 - [Key binding](#key-binding)
+- [Download](#download)
 - [Build & Run](#build--run)
 - [Dependencies](#dependencies)
 - [FAQ](#faq)
   - [Why do you only support these mappers?](#why-do-you-only-support-these-mappers)
-- [My ToDO list](#my-todo-list)
+- [ToDO](#todo)
 - [Reference](#reference)
   - [Emulator](#emulator)
   - [Documents](#documents)
+- [Credit](#credit)
+
+## Screenshots
+
+### `cmd/toynes` (NES Console)
+
+![Screenshots](https://raw.github.com/kaishuu0123/toynes/main/screenshots/screenshots001.jpg)
+
+### `cmd/toynes-nsf` (NSF Player)
+
+(TODO)
 
 ## Spec
 
@@ -55,6 +70,10 @@ Player 2
 | Select | Left Shift |
 | A | A |
 | B | S |
+
+## Download
+
+- [See Release page](https://github.com/kaishuu0123/toynes/releases)
 
 ## Build & Run
 
@@ -99,7 +118,7 @@ Because it's my favorite games & for [nes-test-roms](https://github.com/christop
   - [SD Gundam Gaiden: Knight Gundam Monogatari 2: Hikari no Kishi](https://nescartdb.com/profile/view/1752/)
   - [SD Gundam Gaiden: Knight Gundam Monogatari 3: Densetsu no Kishi Dan](https://nescartdb.com/profile/view/1753/)
 
-## My ToDO list
+## ToDO
 
 - [X] CPU
 - [X] PPU
@@ -110,27 +129,41 @@ Because it's my favorite games & for [nes-test-roms](https://github.com/christop
   - like cc65
 - [ ] disassembler
 - [ ] Interpreter (cmd/toynes-interpreter)
-- [ ] sprite extractor (cmd/toynes-sprites)
+- [ ] Sprite extractor (cmd/toynes-sprites)
 - [ ] ROM info CLI (cmd/toynes-rominfo)
 - [ ] Debugger (like [Mesen's Debugging tools](https://www.mesen.ca/docs/debugging.html))
-- [ ] test
+- [ ] Test
   - [ ] [nes-test-roms](https://github.com/christopherpow/nes-test-roms/)
     - like [tetanes README.md](https://github.com/lukexor/tetanes)
   - [ ] go testing (like integration test)
     - [ ] CPU
     - [ ] PPU
+    - [ ] APU
 
 ## Reference
 
 ### Emulator
 
-- [libretro/Mesen](https://github.com/libretro/Mesen/)
-- [eteran/pretendo](https://github.com/eteran/pretendo)
-- [lukexor/tetanes](https://github.com/lukexor/tetanes)
-- [ivysnow/virtuanes](https://github.com/ivysnow/virtuanes/)
-- [sairoutine/faithjs](https://github.com/sairoutine/faithjs/)
+- CPU, PPU, APU, Mapper etc ...
+  - [libretro/Mesen](https://github.com/libretro/Mesen/)
+  - [eteran/pretendo](https://github.com/eteran/pretendo)
+  - [lukexor/tetanes](https://github.com/lukexor/tetanes)
+  - [ivysnow/virtuanes](https://github.com/ivysnow/virtuanes/)
+  - [sairoutine/faithjs](https://github.com/sairoutine/faithjs/)
+- NSF Player
+  - [theinternetftw/famigo](https://github.com/theinternetftw/famigo)
 
 ### Documents
 
 - [Nesdev Wiki](https://www.nesdev.org/wiki/Nesdev_Wiki)
+  - [CPU - NESdev Wiki](https://www.nesdev.org/wiki/CPU)
+  - [PPU - NESdev Wiki](https://www.nesdev.org/wiki/PPU)
+  - [APU - NESdev Wiki](https://www.nesdev.org/wiki/APU)
+  - [Mapper - NESdev Wiki](https://www.nesdev.org/wiki/Mapper)
 - [6502 Instruction Set](https://www.masswerk.at/6502/6502_instruction_set.html)
+- [NesCartDB - Home](https://nescartdb.com/)
+
+## Credit
+
+- Font
+  - [itouhiro/PixelMplus](https://github.com/itouhiro/PixelMplus)
