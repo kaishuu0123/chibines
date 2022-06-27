@@ -100,7 +100,7 @@ go run cmd/toynes/main.go
 
 ## Dependencies
 
-- Dear ImGUI (imgui-go)
+- Dear ImGUI ([inkyblackness/imgui-go](https://github.com/inkyblackness/imgui-go))
 - GLFW
 - portaudio
 
@@ -146,6 +146,7 @@ Because it's my favorite games & for [nes-test-roms](https://github.com/christop
 
 - CPU, PPU, APU, Mapper etc ...
   - [libretro/Mesen](https://github.com/libretro/Mesen/)
+  - [fogleman/nes](https://github.com/fogleman/nes)
   - [eteran/pretendo](https://github.com/eteran/pretendo)
   - [lukexor/tetanes](https://github.com/lukexor/tetanes)
   - [ivysnow/virtuanes](https://github.com/ivysnow/virtuanes/)
