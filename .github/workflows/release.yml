@@ -140,8 +140,7 @@ jobs:
     strategy:
       matrix:
         # should be same as runner.os
-        # target-os: [Linux, macOS, Windows]
-        target-os: [macOS]
+        target-os: [Linux, macOS, Windows]
         include:
           - target-os: Linux
             compress: tar -zcf
