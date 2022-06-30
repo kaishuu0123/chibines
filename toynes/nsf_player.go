@@ -14,6 +14,8 @@ type NSFPlayer struct {
 	CurrentSongStart   time.Time
 
 	NSFFileInfo *NSFFileInfo
+
+	PlayState bool
 }
 
 func NewNSFPlayer(path string) (*NSFPlayer, error) {
@@ -33,6 +35,7 @@ func NewNSFPlayer(path string) (*NSFPlayer, error) {
 		CurrentSongLen:   0,
 		NSFFileInfo:      nsfFileInfo,
 		PlayCallInterval: float64(nsfFileInfo.PlaySpeedNTSC) / 1000000.0,
+		PlayState:        false,
 	}
 
 	nsf.initNSFtune(nsfFileInfo.StartingSong - 1)

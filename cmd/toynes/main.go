@@ -28,7 +28,7 @@ var (
 		imgui.WindowFlagsNoMove |
 		imgui.WindowFlagsNoResize |
 		imgui.WindowFlagsHorizontalScrollbar
-	consoleRun = false
+	isRunning = false
 )
 
 var console *toynes.Console
@@ -52,7 +52,7 @@ func StartAudio() {
 }
 
 func StopAudio() {
-	if consoleRun {
+	if isRunning {
 		audioForConsole.Stop()
 		console.SetAudioSampleRate(0)
 		console.SetAudioChannel(nil)
@@ -63,7 +63,7 @@ func StopAudio() {
 
 func ResetConsole(file_name string) {
 	StopAudio()
-	consoleRun = false
+	isRunning = false
 
 	log.Println("Reset Console")
 	log.Printf("ROM file path: %s\n", file_name)
@@ -72,7 +72,7 @@ func ResetConsole(file_name string) {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	consoleRun = true
+	isRunning = true
 
 	StartAudio()
 }
@@ -88,7 +88,7 @@ func renderGUI(w *gui.MasterWindow, texture *imgui.TextureID) {
 	w.Platform.NewFrame()
 	imgui.NewFrame()
 
-	if consoleRun {
+	if isRunning {
 		imgui.BackgroundDrawList().
 			AddImage(
 				*texture,
@@ -139,7 +139,7 @@ func main() {
 		cur_timestamp := glfw.GetTime()
 		window.Platform.ProcessEvents()
 
-		if consoleRun {
+		if isRunning {
 			result1 := processInputController1(window.Platform.Window)
 			console.SetButtons1(result1)
 			result2 := processInputController2(window.Platform.Window)
@@ -149,7 +149,7 @@ func main() {
 		dt := cur_timestamp - prev_timestamp
 		prev_timestamp = cur_timestamp
 
-		if consoleRun {
+		if isRunning {
 			console.StepSeconds(dt)
 
 			buffer = console.Buffer()

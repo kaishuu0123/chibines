@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 	"math"
-	_ "net/http/pprof"
 	"os"
+	"strings"
 
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/gordonklaus/portaudio"
@@ -97,21 +97,55 @@ func StartAudio() {
 }
 
 func StopAudio() {
-	audioForConsole.Stop()
-	nsfPlayer.Console.SetAudioSampleRate(0)
-	nsfPlayer.Console.SetAudioChannel(nil)
+	if isRunning {
+		audioForConsole.Stop()
+		nsfPlayer.Console.SetAudioSampleRate(0)
+		nsfPlayer.Console.SetAudioChannel(nil)
 
-	portaudio.Terminate()
+		portaudio.Terminate()
+	}
 }
 
-func renderGUI(w *gui.MasterWindow) {
-	w.Platform.NewFrame()
-	imgui.NewFrame()
+func ResetNSFPlayer(file_name string) {
+	StopAudio()
+	isRunning = false
 
+	log.Println("Reset Console")
+	log.Printf("NSF file path: %s\n", file_name)
+	var err error
+	nsfPlayer, err = toynes.NewNSFPlayer(file_name)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Printf("TotalSongs: %d\n", nsfPlayer.NSFFileInfo.TotalSongs)
+	log.Printf("SongName: %s\n", nsfPlayer.NSFFileInfo.SongName)
+	log.Printf("ArtistName: %s\n", nsfPlayer.NSFFileInfo.ArtistName)
+	log.Printf("Copyright: %s\n", nsfPlayer.NSFFileInfo.CopyrightHolder)
+
+	nsfInfoForView = &NSFInfoForView{
+		title:     fmt.Sprintf("%-9s : %s", "Title", nsfPlayer.NSFFileInfo.SongName),
+		artist:    fmt.Sprintf("%-9s : %s", "Artist", nsfPlayer.NSFFileInfo.ArtistName),
+		copyright: fmt.Sprintf("%-9s : %s", "Copyright", nsfPlayer.NSFFileInfo.CopyrightHolder),
+	}
+
+	isRunning = true
+
+	StartAudio()
+}
+
+func onDrop(names []string) {
+	var sb strings.Builder
+	sb.WriteString(fmt.Sprintf("%s", names[0]))
+	dropInFiles := sb.String()
+	ResetNSFPlayer(dropInFiles)
+}
+
+func renderNSFPlayerGUI() {
 	imgui.PushFont(window.FontsData[2])
 	imgui.SetNextWindowPos(imgui.Vec2{X: 0, Y: 0})
 	imgui.SetNextWindowSize(imgui.Vec2{X: float32(WINDOW_WIDTH), Y: float32(WINDOW_HEIGHT)})
 
+	// NSF File Information
 	imgui.BeginV("Window", nil, windowFlags)
 	imgui.Text(nsfInfoForView.title)
 	imgui.Text(nsfInfoForView.artist)
@@ -127,6 +161,7 @@ func renderGUI(w *gui.MasterWindow) {
 	pos = imgui.CursorPos()
 	freq := nsfPlayer.Console.APU.CurrentInfo()
 
+	// Draw Visualizer (Keyboard & Noize & DMC)
 	s1 := Freq2NoteString(freq.Square1)
 	square1Text := fmt.Sprintf("Square 1: %s", s1)
 	imgui.Text(square1Text)
@@ -165,9 +200,10 @@ func renderGUI(w *gui.MasterWindow) {
 	dmcText := fmt.Sprintf("DMC  : Volume = %X Period = %d", freq.DMC.Out, freq.DMC.Period)
 	imgui.Text(dmcText)
 
+	// Status Line (Play Status & Help Text)
 	pos = imgui.CursorPos()
 	var state string = "Stopped"
-	if isRunning {
+	if nsfPlayer.PlayState {
 		state = "Playing"
 	}
 	stateText := fmt.Sprintf("State: %s", state)
@@ -188,6 +224,26 @@ func renderGUI(w *gui.MasterWindow) {
 
 	imgui.End()
 	imgui.PopFont()
+}
+
+func renderGUI(w *gui.MasterWindow) {
+	w.Platform.NewFrame()
+	imgui.NewFrame()
+
+	if isRunning {
+		renderNSFPlayerGUI()
+	} else {
+		var msg string = "ToyNES NSF Player is currently stopped.\n\nPlease drag and drop NSF file."
+		textSize := imgui.CalcTextSize(msg, false, 0)
+		xpos := (float32(WINDOW_WIDTH) - textSize.X) / 2
+		ypos := (float32(WINDOW_HEIGHT) - textSize.Y) / 2
+		imgui.ForegroundDrawList().
+			AddText(
+				imgui.Vec2{X: xpos, Y: ypos},
+				imgui.PackedColor(0xFFFFFFFF),
+				msg,
+			)
+	}
 
 	imgui.Render()
 
@@ -198,29 +254,18 @@ func renderGUI(w *gui.MasterWindow) {
 
 func main() {
 	flag.Parse()
+	if len(flag.Args()) >= 1 {
+		_, err := os.Stat(flag.Arg(0))
+		if err != nil {
+			log.Fatalln("no NSF file specified or found")
+		}
 
-	_, err := os.Stat(flag.Arg(0))
-	if err != nil {
-		log.Fatalln("no NSF(e) file specified or found")
+		ResetNSFPlayer(flag.Arg(0))
 	}
-
-	nsfPlayer, err = toynes.NewNSFPlayer(flag.Arg(0))
-	if err != nil {
-		log.Fatalf("%v\n", err)
-	}
-
-	log.Printf("TotalSongs: %d\n", nsfPlayer.NSFFileInfo.TotalSongs)
-	log.Printf("SongName: %s\n", nsfPlayer.NSFFileInfo.SongName)
-	log.Printf("ArtistName: %s\n", nsfPlayer.NSFFileInfo.ArtistName)
-	log.Printf("Copyright: %s\n", nsfPlayer.NSFFileInfo.CopyrightHolder)
-
-	nsfInfoForView = &NSFInfoForView{
-		title:     fmt.Sprintf("%-9s : %s", "Title", nsfPlayer.NSFFileInfo.SongName),
-		artist:    fmt.Sprintf("%-9s : %s", "Artist", nsfPlayer.NSFFileInfo.ArtistName),
-		copyright: fmt.Sprintf("%-9s : %s", "Copyright", nsfPlayer.NSFFileInfo.CopyrightHolder),
-	}
+	defer StopAudio()
 
 	window = gui.NewMasterWindow("ToyNES NSF Player", WINDOW_WIDTH, WINDOW_HEIGHT, 0)
+	window.SetDropCallback(onDrop)
 	defer window.Renderer.Dispose()
 	defer window.Platform.Dispose()
 
@@ -228,8 +273,6 @@ func main() {
 	style.SetColor(imgui.StyleColorWindowBg, imgui.Vec4{X: 0.0, Y: 0.0, Z: 0.0, W: 1.00})
 
 	initPianoKeyboard()
-	StartAudio()
-	defer StopAudio()
 
 	prev_timestamp := glfw.GetTime()
 
@@ -261,7 +304,7 @@ func main() {
 		}
 		if !previousKeyState[int(glfw.KeyEnter)] && glfwWindow.GetKey(glfw.KeyEnter) == glfw.Press {
 			previousKeyState[int(glfw.KeyEnter)] = true
-			isRunning = !isRunning
+			nsfPlayer.PlayState = !nsfPlayer.PlayState
 		}
 		if previousKeyState[int(glfw.KeyEnter)] && glfwWindow.GetKey(glfw.KeyEnter) == glfw.Release {
 			previousKeyState[int(glfw.KeyEnter)] = false
@@ -270,14 +313,10 @@ func main() {
 		dt := cur_timestamp - prev_timestamp
 		prev_timestamp = cur_timestamp
 
-		if isRunning {
+		if isRunning && nsfPlayer.PlayState {
 			nsfPlayer.StepSeconds(dt)
 		}
 
 		renderGUI(window)
 	}
-}
-
-func processInputController1(window *glfw.Window) {
-
 }
