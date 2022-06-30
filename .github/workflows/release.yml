@@ -186,6 +186,7 @@ jobs:
         if: matrix.target-os == 'macOS'
         run: |
           chmod +x ToyNES.app/Contents/MacOS/toynes
+          chmod +x ToyNES_NSF.app/Contents/MacOS/toynes-nsf
       - name: Compress the build
         id: compress
         # compress all the files without a parent dir

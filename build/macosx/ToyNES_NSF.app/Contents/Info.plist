@@ -6,7 +6,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>toynes_nsf</string>
+	<string>toynes-nsf</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Copyright</string>
 	<key>NSHumanReadableCopyright</key>
