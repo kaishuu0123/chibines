@@ -1,5 +1,10 @@
 # ToyNES <!-- omit in toc -->
 
+[![Godoc Reference](https://pkg.go.dev/badge/github.com/kaishuu0123/toynes)](https://pkg.go.dev/github.com/kaishuu0123/toynes)
+[![GitHub Release](https://img.shields.io/github/v/release/kaishuu0123/toynes)](https://github.com/kaishuu0123/toynes/releases)
+[![Github Actions Release Workflow](https://github.com/kaishuu0123/toynes/actions/workflows/release.yml/badge.svg)](https://github.com/kaishuu0123/toynes/actions/workflows/release.yml)
+[![Go Report Card](https://goreportcard.com/badge/kaishuu0123/toynes)](https://goreportcard.com/report/kaishuu0123/toynes)
+
 ToyNES is NES emulator written by Go. This is my favorite hobby project!
 
 Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was given to mimicking Mesen's behavior rather than refactoring.
