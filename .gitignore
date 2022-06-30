@@ -95,5 +95,6 @@ roms
 dist/
 
 build/macosx/ToyNES.app/Contents/MacOS/*
+build/macosx/ToyNES_NSF.app/Contents/MacOS/*
 
 imgui.ini
