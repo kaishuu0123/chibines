@@ -121,6 +121,7 @@ func ResetNSFPlayer(file_name string) {
 	log.Printf("SongName: %s\n", nsfPlayer.NSFFileInfo.SongName)
 	log.Printf("ArtistName: %s\n", nsfPlayer.NSFFileInfo.ArtistName)
 	log.Printf("Copyright: %s\n", nsfPlayer.NSFFileInfo.CopyrightHolder)
+	log.Printf("PlaySpeedNTSC: %d\n", nsfPlayer.NSFFileInfo.PlaySpeedNTSC)
 
 	nsfInfoForView = &NSFInfoForView{
 		title:     fmt.Sprintf("%-9s : %s", "Title", nsfPlayer.NSFFileInfo.SongName),
