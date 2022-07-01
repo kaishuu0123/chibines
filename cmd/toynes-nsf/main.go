@@ -202,6 +202,10 @@ func renderNSFPlayerGUI() {
 
 	// Status Line (Play Status & Help Text)
 	pos = imgui.CursorPos()
+	io := imgui.CurrentIO()
+	framerateText := fmt.Sprintf("Application average %.3f ms/frame (%.1f FPS)", 1000.0/io.Framerate(), io.Framerate())
+	imgui.Text(framerateText)
+
 	var state string = "Stopped"
 	if nsfPlayer.PlayState {
 		state = "Playing"
