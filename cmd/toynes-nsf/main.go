@@ -121,7 +121,6 @@ func ResetNSFPlayer(file_name string) {
 	log.Printf("SongName: %s\n", nsfPlayer.NSFFileInfo.SongName)
 	log.Printf("ArtistName: %s\n", nsfPlayer.NSFFileInfo.ArtistName)
 	log.Printf("Copyright: %s\n", nsfPlayer.NSFFileInfo.CopyrightHolder)
-	log.Printf("PlaySpeedNTSC: %d\n", nsfPlayer.NSFFileInfo.PlaySpeedNTSC)
 
 	nsfInfoForView = &NSFInfoForView{
 		title:     fmt.Sprintf("%-9s : %s", "Title", nsfPlayer.NSFFileInfo.SongName),
@@ -203,9 +202,11 @@ func renderNSFPlayerGUI() {
 
 	// Status Line (Play Status & Help Text)
 	pos = imgui.CursorPos()
-	io := imgui.CurrentIO()
-	framerateText := fmt.Sprintf("Application average %.3f ms/frame (%.1f FPS)", 1000.0/io.Framerate(), io.Framerate())
-	imgui.Text(framerateText)
+
+	// XXX: For Debug
+	// io := imgui.CurrentIO()
+	// framerateText := fmt.Sprintf("Application average %.3f ms/frame (%.1f FPS)", 1000.0/io.Framerate(), io.Framerate())
+	// imgui.Text(framerateText)
 
 	var state string = "Stopped"
 	if nsfPlayer.PlayState {
@@ -278,6 +279,8 @@ func main() {
 	style.SetColor(imgui.StyleColorWindowBg, imgui.Vec4{X: 0.0, Y: 0.0, Z: 0.0, W: 1.00})
 
 	initPianoKeyboard()
+	// Unlimit FPS
+	glfw.SwapInterval(0)
 
 	prev_timestamp := glfw.GetTime()
 
