@@ -1,5 +1,5 @@
 // refs: github.com/libretro/Mesen
-package toynes
+package chibines
 
 type Mapper003 struct {
 	*MapperBase

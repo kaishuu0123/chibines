@@ -11,9 +11,9 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/gordonklaus/portaudio"
 	"github.com/inkyblackness/imgui-go/v4"
-	"github.com/kaishuu0123/toynes/internal/audio"
-	"github.com/kaishuu0123/toynes/internal/gui"
-	"github.com/kaishuu0123/toynes/toynes"
+	"github.com/kaishuu0123/chibines/chibines"
+	"github.com/kaishuu0123/chibines/internal/audio"
+	"github.com/kaishuu0123/chibines/internal/gui"
 	"golang.org/x/image/draw"
 )
 
@@ -31,7 +31,7 @@ var (
 	isRunning = false
 )
 
-var console *toynes.Console
+var console *chibines.Console
 var audioForConsole *audio.Audio
 
 func StartAudio() {
@@ -68,7 +68,7 @@ func ResetConsole(file_name string) {
 	log.Println("Reset Console")
 	log.Printf("ROM file path: %s\n", file_name)
 	var err error
-	console, err = toynes.NewConsole(file_name, false)
+	console, err = chibines.NewConsole(file_name, false)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -96,7 +96,7 @@ func renderGUI(w *gui.MasterWindow, texture *imgui.TextureID) {
 				imgui.Vec2{X: float32(WINDOW_WIDTH), Y: float32(WINDOW_HEIGHT)},
 			)
 	} else {
-		var msg string = "ToyNES is currently stopped.\n\nPlease drag and drop ROM file."
+		var msg string = "ChibiNES is currently stopped.\n\nPlease drag and drop ROM file."
 		textSize := imgui.CalcTextSize(msg, false, 0)
 		xpos := (float32(WINDOW_WIDTH) - textSize.X) / 2
 		ypos := (float32(WINDOW_HEIGHT) - textSize.Y) / 2
@@ -127,7 +127,7 @@ func main() {
 	}
 	defer StopAudio()
 
-	window := gui.NewMasterWindow("ToyNES", WINDOW_WIDTH, WINDOW_HEIGHT, 0)
+	window := gui.NewMasterWindow("ChibiNES", WINDOW_WIDTH, WINDOW_HEIGHT, 0)
 	window.SetDropCallback(onDrop)
 	screenImage := image.NewRGBA(image.Rect(0, 0, WINDOW_WIDTH*SCALE, WINDOW_HEIGHT*SCALE))
 
@@ -164,26 +164,26 @@ func main() {
 
 func processInputController1(window *glfw.Window) [8]bool {
 	var result [8]bool
-	result[toynes.ButtonA] = window.GetKey(glfw.KeyZ) == glfw.Press
-	result[toynes.ButtonB] = window.GetKey(glfw.KeyX) == glfw.Press
-	result[toynes.ButtonSelect] = window.GetKey(glfw.KeyRightShift) == glfw.Press
-	result[toynes.ButtonStart] = window.GetKey(glfw.KeyEnter) == glfw.Press
-	result[toynes.ButtonUp] = window.GetKey(glfw.KeyUp) == glfw.Press
-	result[toynes.ButtonDown] = window.GetKey(glfw.KeyDown) == glfw.Press
-	result[toynes.ButtonLeft] = window.GetKey(glfw.KeyLeft) == glfw.Press
-	result[toynes.ButtonRight] = window.GetKey(glfw.KeyRight) == glfw.Press
+	result[chibines.ButtonA] = window.GetKey(glfw.KeyZ) == glfw.Press
+	result[chibines.ButtonB] = window.GetKey(glfw.KeyX) == glfw.Press
+	result[chibines.ButtonSelect] = window.GetKey(glfw.KeyRightShift) == glfw.Press
+	result[chibines.ButtonStart] = window.GetKey(glfw.KeyEnter) == glfw.Press
+	result[chibines.ButtonUp] = window.GetKey(glfw.KeyUp) == glfw.Press
+	result[chibines.ButtonDown] = window.GetKey(glfw.KeyDown) == glfw.Press
+	result[chibines.ButtonLeft] = window.GetKey(glfw.KeyLeft) == glfw.Press
+	result[chibines.ButtonRight] = window.GetKey(glfw.KeyRight) == glfw.Press
 	return result
 }
 
 func processInputController2(window *glfw.Window) [8]bool {
 	var result [8]bool
-	result[toynes.ButtonA] = window.GetKey(glfw.KeyA) == glfw.Press
-	result[toynes.ButtonB] = window.GetKey(glfw.KeyS) == glfw.Press
-	result[toynes.ButtonSelect] = window.GetKey(glfw.KeyLeftShift) == glfw.Press
-	result[toynes.ButtonStart] = window.GetKey(glfw.KeyE) == glfw.Press
-	result[toynes.ButtonUp] = window.GetKey(glfw.KeyI) == glfw.Press
-	result[toynes.ButtonDown] = window.GetKey(glfw.KeyK) == glfw.Press
-	result[toynes.ButtonLeft] = window.GetKey(glfw.KeyJ) == glfw.Press
-	result[toynes.ButtonRight] = window.GetKey(glfw.KeyL) == glfw.Press
+	result[chibines.ButtonA] = window.GetKey(glfw.KeyA) == glfw.Press
+	result[chibines.ButtonB] = window.GetKey(glfw.KeyS) == glfw.Press
+	result[chibines.ButtonSelect] = window.GetKey(glfw.KeyLeftShift) == glfw.Press
+	result[chibines.ButtonStart] = window.GetKey(glfw.KeyE) == glfw.Press
+	result[chibines.ButtonUp] = window.GetKey(glfw.KeyI) == glfw.Press
+	result[chibines.ButtonDown] = window.GetKey(glfw.KeyK) == glfw.Press
+	result[chibines.ButtonLeft] = window.GetKey(glfw.KeyJ) == glfw.Press
+	result[chibines.ButtonRight] = window.GetKey(glfw.KeyL) == glfw.Press
 	return result
 }

@@ -1,5 +1,5 @@
 // from github.com/fogleman/nes
-package toynes
+package chibines
 
 import "math"
 

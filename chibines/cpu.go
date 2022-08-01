@@ -1,5 +1,5 @@
 // refs: github.com/libretro/Mesen
-package toynes
+package chibines
 
 import (
 	"fmt"

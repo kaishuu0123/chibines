@@ -2,7 +2,7 @@ package gui
 
 import (
 	"github.com/inkyblackness/imgui-go/v4"
-	"github.com/kaishuu0123/toynes/internal/gui/framework_for_imgui"
+	"github.com/kaishuu0123/chibines/internal/gui/framework_for_imgui"
 )
 
 type MasterWindow struct {

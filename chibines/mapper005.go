@@ -1,5 +1,5 @@
 // refs: github.com/libretro/Mesen
-package toynes
+package chibines
 
 type Mapper005MemoryHandler struct {
 	console *Console
