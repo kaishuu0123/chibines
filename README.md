@@ -1,17 +1,17 @@
-# ToyNES <!-- omit in toc -->
+# ChibiNES <!-- omit in toc -->
 
-[![Godoc Reference](https://pkg.go.dev/badge/github.com/kaishuu0123/toynes)](https://pkg.go.dev/github.com/kaishuu0123/toynes)
-[![GitHub Release](https://img.shields.io/github/v/release/kaishuu0123/toynes)](https://github.com/kaishuu0123/toynes/releases)
-[![Github Actions Release Workflow](https://github.com/kaishuu0123/toynes/actions/workflows/release.yml/badge.svg)](https://github.com/kaishuu0123/toynes/actions/workflows/release.yml)
-[![Go Report Card](https://goreportcard.com/badge/kaishuu0123/toynes)](https://goreportcard.com/report/kaishuu0123/toynes)
+[![Godoc Reference](https://pkg.go.dev/badge/github.com/kaishuu0123/chibines)](https://pkg.go.dev/github.com/kaishuu0123/chibines)
+[![GitHub Release](https://img.shields.io/github/v/release/kaishuu0123/chibines)](https://github.com/kaishuu0123/chibines/releases)
+[![Github Actions Release Workflow](https://github.com/kaishuu0123/chibines/actions/workflows/release.yml/badge.svg)](https://github.com/kaishuu0123/chibines/actions/workflows/release.yml)
+[![Go Report Card](https://goreportcard.com/badge/kaishuu0123/chibines)](https://goreportcard.com/report/kaishuu0123/chibines)
 
-ToyNES is NES emulator written by Go. This is my favorite hobby project!
+ChibiNES is NES emulator written by Go. This is my favorite hobby project!
 
 Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was given to mimicking Mesen's behavior rather than refactoring.
 
 - [Screenshots](#screenshots)
-  - [`cmd/toynes` (NES Console)](#cmdtoynes-nes-console)
-  - [`cmd/toynes-nsf` (NSF Player)](#cmdtoynes-nsf-nsf-player)
+  - [`cmd/chibines` (NES Console)](#cmdchibines-nes-console)
+  - [`cmd/chibines-nsf` (NSF Player)](#cmdchibines-nsf-nsf-player)
 - [Spec](#spec)
 - [Key binding](#key-binding)
 - [Download](#download)
@@ -27,11 +27,11 @@ Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was
 
 ## Screenshots
 
-### `cmd/toynes` (NES Console)
+### `cmd/chibines` (NES Console)
 
-![Screenshots](https://raw.github.com/kaishuu0123/toynes/main/screenshots/screenshots001.jpg)
+![Screenshots](https://raw.github.com/kaishuu0123/chibines/main/screenshots/screenshots001.jpg)
 
-### `cmd/toynes-nsf` (NSF Player)
+### `cmd/chibines-nsf` (NSF Player)
 
 https://user-images.githubusercontent.com/1567423/175847470-15224c46-65da-4cf0-87a8-ef876d67629f.mp4
 
@@ -78,7 +78,7 @@ Player 2
 
 ## Download
 
-- [See Release page](https://github.com/kaishuu0123/toynes/releases)
+- [See Release page](https://github.com/kaishuu0123/chibines/releases)
 
 ## Build & Run
 
@@ -94,13 +94,13 @@ brew install portaudio
 - build
 
 ```shell
-go build cmd/toynes/main.go
+go build cmd/chibines/main.go
 ```
 
 - or go run
 
 ```shell
-go run cmd/toynes/main.go
+go run cmd/chibines/main.go
 ```
 
 ## Dependencies
@@ -128,14 +128,14 @@ Because it's my favorite games & for [nes-test-roms](https://github.com/christop
 - [X] CPU
 - [X] PPU
 - [X] APU
-- [X] NSF Player (cmd/toynes-nsf)
+- [X] NSF Player (cmd/chibines-nsf)
   - like VirtuaNES
 - [ ] 6502 compiler
   - like cc65
 - [ ] disassembler
-- [ ] Interpreter (cmd/toynes-interpreter)
-- [ ] Sprite extractor (cmd/toynes-sprites)
-- [ ] ROM info CLI (cmd/toynes-rominfo)
+- [ ] Interpreter (cmd/chibines-interpreter)
+- [ ] Sprite extractor (cmd/chibines-sprites)
+- [ ] ROM info CLI (cmd/chibines-rominfo)
 - [ ] Debugger (like [Mesen's Debugging tools](https://www.mesen.ca/docs/debugging.html))
 - [ ] Test
   - [ ] [nes-test-roms](https://github.com/christopherpow/nes-test-roms/)

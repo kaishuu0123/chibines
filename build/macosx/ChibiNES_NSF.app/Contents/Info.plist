@@ -6,7 +6,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
-	<string>toynes-nsf</string>
+	<string>chibines-nsf</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Copyright</string>
 	<key>NSHumanReadableCopyright</key>
@@ -14,17 +14,17 @@
 	<key>CFBundleIconFile</key>
 	<string>appIcon.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>me.saino.toynes_nsf</string>
+	<string>me.saino.chibines_nsf</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>ToyNES_NSF</string>
+	<string>ChibiNES_NSF</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>CFBundleShortVersionString</string>
 	<key>CFBundleSignature</key>
-	<string>ToyNES_NSF</string>
+	<string>ChibiNES_NSF</string>
 	<key>CFBundleVersion</key>
 	<string>CFBundleVersion</string>
 	<key>NSMainNibFile</key>

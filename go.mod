@@ -1,4 +1,4 @@
-module github.com/kaishuu0123/toynes
+module github.com/kaishuu0123/chibines
 
 go 1.18
 

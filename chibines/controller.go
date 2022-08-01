@@ -1,5 +1,5 @@
 // refs: github.com/fogleman/nes
-package toynes
+package chibines
 
 const (
 	ButtonA = iota

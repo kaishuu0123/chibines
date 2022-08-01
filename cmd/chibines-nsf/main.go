@@ -11,9 +11,9 @@ import (
 	"github.com/go-gl/glfw/v3.3/glfw"
 	"github.com/gordonklaus/portaudio"
 	"github.com/inkyblackness/imgui-go/v4"
-	"github.com/kaishuu0123/toynes/internal/audio"
-	"github.com/kaishuu0123/toynes/internal/gui"
-	"github.com/kaishuu0123/toynes/toynes"
+	"github.com/kaishuu0123/chibines/chibines"
+	"github.com/kaishuu0123/chibines/internal/audio"
+	"github.com/kaishuu0123/chibines/internal/gui"
 )
 
 const (
@@ -52,7 +52,7 @@ var NoteNames = []string{
 }
 
 var window *gui.MasterWindow
-var nsfPlayer *toynes.NSFPlayer
+var nsfPlayer *chibines.NSFPlayer
 var audioForConsole *audio.Audio
 var isRunning bool = false
 var nsfInfoForView *NSFInfoForView
@@ -113,7 +113,7 @@ func ResetNSFPlayer(file_name string) {
 	log.Println("Reset Console")
 	log.Printf("NSF file path: %s\n", file_name)
 	var err error
-	nsfPlayer, err = toynes.NewNSFPlayer(file_name)
+	nsfPlayer, err = chibines.NewNSFPlayer(file_name)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -239,7 +239,7 @@ func renderGUI(w *gui.MasterWindow) {
 	if isRunning {
 		renderNSFPlayerGUI()
 	} else {
-		var msg string = "ToyNES NSF Player is currently stopped.\n\nPlease drag and drop NSF file."
+		var msg string = "ChibiNES NSF Player is currently stopped.\n\nPlease drag and drop NSF file."
 		textSize := imgui.CalcTextSize(msg, false, 0)
 		xpos := (float32(WINDOW_WIDTH) - textSize.X) / 2
 		ypos := (float32(WINDOW_HEIGHT) - textSize.Y) / 2
@@ -270,7 +270,7 @@ func main() {
 	}
 	defer StopAudio()
 
-	window = gui.NewMasterWindow("ToyNES NSF Player", WINDOW_WIDTH, WINDOW_HEIGHT, 0)
+	window = gui.NewMasterWindow("ChibiNES NSF Player", WINDOW_WIDTH, WINDOW_HEIGHT, 0)
 	window.SetDropCallback(onDrop)
 	defer window.Renderer.Dispose()
 	defer window.Platform.Dispose()

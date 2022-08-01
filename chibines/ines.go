@@ -1,5 +1,5 @@
 // refs: github.com/fogleman/nes
-package toynes
+package chibines
 
 import (
 	"encoding/binary"

@@ -1,5 +1,5 @@
 // ORIGINAL
-package toynes
+package chibines
 
 import (
 	"log"

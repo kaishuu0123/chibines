@@ -5,7 +5,7 @@ on:
     tags:
       - "v*"
 env:
-  app-name: toynes
+  app-name: chibines
   app-arch: x86_64
 jobs:
   # run app build for each OS in parallel
@@ -54,32 +54,32 @@ jobs:
       - name: Build Linux app
         if: matrix.os == 'ubuntu-latest'
         run: |
-          CGO_ENABLED=1 go build -o _release/toynes cmd/toynes/main.go
-          CGO_ENABLED=1 go build -o _release/toynes-nsf cmd/toynes-nsf/*.go
+          CGO_ENABLED=1 go build -o _release/chibines cmd/chibines/main.go
+          CGO_ENABLED=1 go build -o _release/chibines-nsf cmd/chibines-nsf/*.go
 
       - name: Build macOS app
         if: matrix.os == 'macos-latest'
         run: |
-          mkdir -p build/macosx/ToyNES.app/Contents/MacOS/
-          mkdir -p build/macosx/ToyNES_NSF.app/Contents/MacOS/
-          CGO_ENABLED=1 go build -o build/macosx/ToyNES.app/Contents/MacOS/toynes cmd/toynes/main.go
-          CGO_ENABLED=1 go build -o build/macosx/ToyNES_NSF.app/Contents/MacOS/toynes-nsf cmd/toynes-nsf/*.go
-          cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/
-          cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ToyNES_NSF.app/Contents/MacOS/
-          install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ToyNES.app/Contents/MacOS/toynes
-          install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ToyNES_NSF.app/Contents/MacOS/toynes-nsf
+          mkdir -p build/macosx/ChibiNES.app/Contents/MacOS/
+          mkdir -p build/macosx/ChibiNES_NSF.app/Contents/MacOS/
+          CGO_ENABLED=1 go build -o build/macosx/ChibiNES.app/Contents/MacOS/chibines cmd/chibines/main.go
+          CGO_ENABLED=1 go build -o build/macosx/ChibiNES_NSF.app/Contents/MacOS/chibines-nsf cmd/chibines-nsf/*.go
+          cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ChibiNES.app/Contents/MacOS/
+          cp /usr/local/opt/portaudio/lib/libportaudio.2.dylib build/macosx/ChibiNES_NSF.app/Contents/MacOS/
+          install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ChibiNES.app/Contents/MacOS/chibines
+          install_name_tool -change /usr/local/opt/portaudio/lib/libportaudio.2.dylib @executable_path/libportaudio.2.dylib build/macosx/ChibiNES_NSF.app/Contents/MacOS/chibines-nsf
           mkdir _release
-          cp -r build/macosx/ToyNES.app _release/ToyNES.app
-          cp -r build/macosx/ToyNES_NSF.app _release/ToyNES_NSF.app
-          chmod +x _release/ToyNES.app/Contents/MacOS/toynes
-          chmod +x _release/ToyNES_NSF.app/Contents/MacOS/toynes-nsf
+          cp -r build/macosx/ChibiNES.app _release/ChibiNES.app
+          cp -r build/macosx/ChibiNES_NSF.app _release/ChibiNES_NSF.app
+          chmod +x _release/ChibiNES.app/Contents/MacOS/chibines
+          chmod +x _release/ChibiNES_NSF.app/Contents/MacOS/chibines-nsf
 
       - name: Build Windows app
         if: matrix.os == 'windows-latest'
         shell: msys2 {0}
         run: |
-          CGO_ENABLED=1 go build -o _release/toynes.exe cmd/toynes/main.go
-          CGO_ENABLED=1 go build -o _release/toynes-nsf.exe cmd/toynes-nsf/*.go
+          CGO_ENABLED=1 go build -o _release/chibines.exe cmd/chibines/main.go
+          CGO_ENABLED=1 go build -o _release/chibines-nsf.exe cmd/chibines-nsf/*.go
           cp /mingw64/bin/glfw3.dll _release/
           cp /mingw64/bin/libatomic-1.dll _release/
           cp /mingw64/bin/libgcc_s_seh-1.dll _release/
@@ -185,8 +185,8 @@ jobs:
       - name: Add permission for MacOS
         if: matrix.target-os == 'macOS'
         run: |
-          chmod +x ToyNES.app/Contents/MacOS/toynes
-          chmod +x ToyNES_NSF.app/Contents/MacOS/toynes-nsf
+          chmod +x ChibiNES.app/Contents/MacOS/chibines
+          chmod +x ChibiNES_NSF.app/Contents/MacOS/chibines-nsf
       - name: Compress the build
         id: compress
         # compress all the files without a parent dir
