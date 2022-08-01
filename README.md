@@ -12,9 +12,9 @@ Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was
 - [Screenshots](#screenshots)
   - [`cmd/chibines` (NES Console)](#cmdchibines-nes-console)
   - [`cmd/chibines-nsf` (NSF Player)](#cmdchibines-nsf-nsf-player)
+- [Download](#download)
 - [Spec](#spec)
 - [Key binding](#key-binding)
-- [Download](#download)
 - [Build & Run](#build--run)
 - [Dependencies](#dependencies)
 - [FAQ](#faq)
@@ -34,6 +34,10 @@ Porting [libretro/Mesen](https://github.com/libretro/Mesen/) to Go. Priority was
 ### `cmd/chibines-nsf` (NSF Player)
 
 https://user-images.githubusercontent.com/1567423/175847470-15224c46-65da-4cf0-87a8-ef876d67629f.mp4
+
+## Download
+
+- [See Release page](https://github.com/kaishuu0123/chibines/releases)
 
 ## Spec
 
@@ -75,10 +79,6 @@ Player 2
 | Select | Left Shift |
 | A | A |
 | B | S |
-
-## Download
-
-- [See Release page](https://github.com/kaishuu0123/chibines/releases)
 
 ## Build & Run
 
