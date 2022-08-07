@@ -141,7 +141,7 @@ func onDrop(names []string) {
 }
 
 func renderNSFPlayerGUI() {
-	imgui.PushFont(window.FontsData[2])
+	imgui.PushFont(window.FontsData[1])
 	imgui.SetNextWindowPos(imgui.Vec2{X: 0, Y: 0})
 	imgui.SetNextWindowSize(imgui.Vec2{X: float32(WINDOW_WIDTH), Y: float32(WINDOW_HEIGHT)})
 
@@ -155,7 +155,7 @@ func renderNSFPlayerGUI() {
 
 	dl := imgui.WindowDrawList()
 	pos := imgui.CursorPos()
-	imgui.PushFont(window.FontsData[3])
+	imgui.PushFont(window.FontsData[2])
 	imgui.SetCursorPos(imgui.Vec2{X: pos.X, Y: pos.Y + 20})
 
 	pos = imgui.CursorPos()
