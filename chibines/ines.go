@@ -101,8 +101,11 @@ func LoadNESFile(path string, console *Console) (*Cartridge, error) {
 	cartridge.Mapper = mapper
 
 	if battery != 0 {
-		cartridge.EEPROM = NewEEPROM(0, path)
-		cartridge.EEPROM.Reset()
+		// mapper16 only (Other mappers use saveRAM in mapper_base.go)
+		if cartridge.MapperID == 16 {
+			cartridge.EEPROM = NewEEPROM(0, path)
+			cartridge.EEPROM.Reset()
+		}
 	}
 
 	// success
