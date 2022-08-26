@@ -131,17 +131,23 @@ func main() {
 	window.SetDropCallback(onDrop)
 	screenImage := image.NewRGBA(image.Rect(0, 0, WINDOW_WIDTH*SCALE, WINDOW_HEIGHT*SCALE))
 
-	var texture imgui.TextureID
-	prev_timestamp := glfw.GetTime()
+	if glfw.Joystick1.Present() {
+		joyname := glfw.Joystick1.GetName()
+		log.Printf("Joystick1 name: %s\n", joyname)
+	}
 
 	var buffer *image.RGBA
+	var texture imgui.TextureID
+	prev_timestamp := glfw.GetTime()
 	for !window.Platform.ShouldStop() {
 		cur_timestamp := glfw.GetTime()
 		window.Platform.ProcessEvents()
 
 		if isRunning {
 			result1 := processInputController1(window.Platform.Window)
-			console.SetButtons1(result1)
+			j1 := readJoyStick(glfw.Joystick1)
+			console.SetButtons1(combineButtons(result1, j1))
+
 			result2 := processInputController2(window.Platform.Window)
 			console.SetButtons2(result2)
 		}
@@ -185,5 +191,45 @@ func processInputController2(window *glfw.Window) [8]bool {
 	result[chibines.ButtonDown] = window.GetKey(glfw.KeyK) == glfw.Press
 	result[chibines.ButtonLeft] = window.GetKey(glfw.KeyJ) == glfw.Press
 	result[chibines.ButtonRight] = window.GetKey(glfw.KeyL) == glfw.Press
+	return result
+}
+
+func readJoyStick(joy glfw.Joystick) [8]bool {
+	var result [8]bool
+	if !glfw.Joystick1.Present() {
+		return result
+	}
+	joyname := glfw.Joystick1.GetName()
+	axes := glfw.Joystick1.GetAxes()
+	buttons := glfw.Joystick1.GetButtons()
+	switch joyname {
+	case "DUALSHOCK 4 Wireless Controller":
+		result[chibines.ButtonA] = buttons[2] == 1
+		result[chibines.ButtonB] = buttons[1] == 1
+		result[chibines.ButtonSelect] = buttons[8] == 1
+		result[chibines.ButtonStart] = buttons[9] == 1
+		result[chibines.ButtonUp] = axes[1] < -0.5
+		result[chibines.ButtonDown] = axes[1] > 0.5
+		result[chibines.ButtonLeft] = axes[0] < -0.5
+		result[chibines.ButtonRight] = axes[0] > 0.5
+	default:
+		result[chibines.ButtonA] = buttons[0] == 1
+		result[chibines.ButtonB] = buttons[1] == 1
+		result[chibines.ButtonSelect] = buttons[6] == 1
+		result[chibines.ButtonStart] = buttons[7] == 1
+		result[chibines.ButtonUp] = axes[1] < -0.5
+		result[chibines.ButtonDown] = axes[1] > 0.5
+		result[chibines.ButtonLeft] = axes[0] < -0.5
+		result[chibines.ButtonRight] = axes[0] > 0.5
+	}
+
+	return result
+}
+
+func combineButtons(a, b [8]bool) [8]bool {
+	var result [8]bool
+	for i := 0; i < 8; i++ {
+		result[i] = a[i] || b[i]
+	}
 	return result
 }
